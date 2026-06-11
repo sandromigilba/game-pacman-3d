@@ -15,6 +15,8 @@ const SceneController: React.FC = () => {
   
   // Cache to track camera target positions
   const lastLookTarget = useRef<THREE.Vector3>(new THREE.Vector3(0, 0, 0));
+  const lastCameraMode = useRef<string>(cameraMode);
+  const switchTransitionTime = useRef<number>(0);
 
   useFrame((_, delta) => {
     // Run the game simulation tick
@@ -22,6 +24,18 @@ const SceneController: React.FC = () => {
 
     const store = useGameStore.getState();
     const { pacman, screenShake, gameStatus } = store;
+
+    // Track mode transition
+    if (lastCameraMode.current !== cameraMode) {
+      lastCameraMode.current = cameraMode;
+      if (cameraMode === 'follow') {
+        switchTransitionTime.current = 1.2; // 1.2 seconds zoom-in transition window
+      }
+    }
+
+    if (switchTransitionTime.current > 0) {
+      switchTransitionTime.current -= delta;
+    }
 
     // Reset camera in start/victory screens
     if (gameStatus === 'idle' || gameStatus === 'ready') {
@@ -71,16 +85,20 @@ const SceneController: React.FC = () => {
 
       const targetPos = new THREE.Vector3(targetCamX, targetCamY, targetCamZ);
       
-      // Check if Pacman has wrapped around the side tunnels or just respawned (large distance jump)
       const distToTarget = camera.position.distanceTo(targetPos);
-      if (distToTarget > 8 && gameStatus === 'playing') {
-        // Teleport camera instantly to prevent flying across the maze
+      const isTransitioning = switchTransitionTime.current > 0;
+
+      // Teleport instantly only if we aren't in a mode transition (avoid snap when swoop zooming down)
+      if (distToTarget > 8 && gameStatus === 'playing' && !isTransitioning) {
         camera.position.copy(targetPos);
         lastLookTarget.current.set(pacman.posX + lookOffsetX, 0.2, pacman.posZ + lookOffsetZ);
       } else {
-        camera.position.lerp(targetPos, delta * 12); // tight follow when Pacman moves forward
+        // Slower lerp speed during transition for a beautiful zoom-in sweep
+        const lerpSpeed = isTransitioning ? 3.0 : 12;
+        camera.position.lerp(targetPos, delta * lerpSpeed);
+        
         const lookTarget = new THREE.Vector3(pacman.posX + lookOffsetX, 0.2, pacman.posZ + lookOffsetZ);
-        lastLookTarget.current.lerp(lookTarget, delta * 15); // tight follow look target
+        lastLookTarget.current.lerp(lookTarget, delta * 15);
       }
       camera.lookAt(lastLookTarget.current);
     }

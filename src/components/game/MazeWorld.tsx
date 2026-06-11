@@ -1,12 +1,20 @@
 import React, { useMemo, useRef, useLayoutEffect } from 'react';
 import * as THREE from 'three';
+import { MeshReflectorMaterial } from '@react-three/drei';
 import { useGameStore } from '../../store/useGameStore';
 import { INITIAL_MAZE, MAZE_ROWS, MAZE_COLS, gridToWorld } from '../../utils/mazeGenerator';
 
 export const MazeWorld: React.FC = () => {
   const theme = useGameStore((state) => state.theme);
   const meshRef = useRef<THREE.InstancedMesh>(null);
-  const wireframeRef = useRef<THREE.InstancedMesh>(null);
+
+  // Pre-calculate EdgesGeometry for clean outlines without diagonal lines
+  const edgesGeometry = useMemo(() => {
+    const boxGeo = new THREE.BoxGeometry(1, 1, 1);
+    const geo = new THREE.EdgesGeometry(boxGeo);
+    boxGeo.dispose();
+    return geo;
+  }, []);
 
   // Filter out wall coordinates
   const wallCoords = useMemo(() => {
@@ -36,15 +44,9 @@ export const MazeWorld: React.FC = () => {
       dummy.updateMatrix();
       
       meshRef.current!.setMatrixAt(i, dummy.matrix);
-      if (wireframeRef.current) {
-        wireframeRef.current.setMatrixAt(i, dummy.matrix);
-      }
     });
 
     meshRef.current.instanceMatrix.needsUpdate = true;
-    if (wireframeRef.current) {
-      wireframeRef.current.instanceMatrix.needsUpdate = true;
-    }
   }, [wallCoords]);
 
   // Determine wall materials based on theme
@@ -73,12 +75,13 @@ export const MazeWorld: React.FC = () => {
       case 'neon':
       default:
         return {
-          color: '#ffffff', // Transparent white
+          color: '#020617', // Dark base to make the emissive color pop
           roughness: 0.1,
           metalness: 0.9,
-          emissive: '#444444', // Brighter emissive glow
+          emissive: '#00d4ff', // Glowing cyber cyan
+          emissiveIntensity: 1.8,
           transparent: true,
-          opacity: 0.7, // Slightly higher opacity for extra whiteness and visibility
+          opacity: 0.75,
           wireframe: false,
         };
     }
@@ -98,15 +101,41 @@ export const MazeWorld: React.FC = () => {
 
   return (
     <group>
-      {/* 3D Floor / Grid Area */}
+      {/* 3D Floor / Grid Area - reflects objects and receives shadows in neon mode */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]} receiveShadow>
         <planeGeometry args={[MAZE_COLS + 2, MAZE_ROWS + 2]} />
-        <meshStandardMaterial
-          color={theme === 'retro' ? '#000000' : theme === 'minimalist' ? '#f8fafc' : '#040714'}
-          roughness={theme === 'neon' ? 0.3 : 0.8}
-          metalness={theme === 'neon' ? 0.7 : 0.1}
-        />
+        {theme === 'neon' ? (
+          <MeshReflectorMaterial
+            mirror={0.4} // Mirror reflection intensity
+            blur={[300, 100]} // Blur ground reflections (width, height)
+            mixBlur={1.0} // How much blur mixes with surface roughness
+            mixStrength={10.0} // Strength of reflections
+            mixContrast={1.0} // Contrast of reflections
+            resolution={512} // Off-buffer resolution
+            depthScale={1.2} // Scale of depth factor
+            minDepthThreshold={0.4}
+            maxDepthThreshold={1.4}
+            color="#040615"
+            roughness={0.2}
+            metalness={0.9}
+            distortion={0}
+          />
+        ) : (
+          <meshStandardMaterial
+            color={theme === 'retro' ? '#000000' : '#f8fafc'}
+            roughness={0.8}
+            metalness={0.1}
+          />
+        )}
       </mesh>
+
+      {/* Cyber Grid Lines for Neon Theme (matching gameplay_preview.png) */}
+      {theme === 'neon' && (
+        <gridHelper
+          args={[32, 32, '#00d4ff', '#8b5cf6']}
+          position={[0.5, 0.005, 0.5]}
+        />
+      )}
 
       {/* Instanced Maze Walls (Main Body) */}
       <instancedMesh
@@ -114,26 +143,30 @@ export const MazeWorld: React.FC = () => {
         args={[null as any, null as any, wallCoords.length]}
         castShadow
         receiveShadow
+        frustumCulled={false}
       >
         <boxGeometry />
         <meshStandardMaterial {...materialProps} />
       </instancedMesh>
 
-      {/* Neon Outline Layer (for Cyber aesthetic) */}
-      {theme === 'neon' && (
-        <instancedMesh
-          ref={wireframeRef}
-          args={[null as any, null as any, wallCoords.length]}
-        >
-          <boxGeometry />
-          <meshBasicMaterial
-            color="#00D4FF"
-            wireframe
-            transparent
-            opacity={0.55} // Brighter outlines
-          />
-        </instancedMesh>
-      )}
+      {/* Neon Outline Layer (for Cyber aesthetic) - Clean edges with no diagonal lines, scaled slightly thicker and bright cyan */}
+      {theme === 'neon' && wallCoords.map((coord, i) => {
+        const { x, z } = gridToWorld(coord.x, coord.z);
+        return (
+          <lineSegments
+            key={i}
+            position={[x, 0.4, z]}
+            scale={[0.96, 0.81, 0.96]} // Slightly larger than wall scale [0.95, 0.8, 0.95] for thicker visual border
+            geometry={edgesGeometry}
+          >
+            <lineBasicMaterial
+              color="#00FFFF" // Bright cyan
+              transparent={false}
+              opacity={1.0}
+            />
+          </lineSegments>
+        );
+      })}
 
       {/* Ghost House Gate */}
       {gateCoords && (

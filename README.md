@@ -17,9 +17,12 @@ The aesthetics combine **cyberpunk neon grids** (reminiscent of Pac-Man Champion
 ## 🚀 Key Features
 
 - **Stylized 3D Maze World**: Built with `<instancedMesh>` for 60 FPS performance, featuring neon-glowing emissive trims, dynamic fog, and soft shadow casting.
-- **Enhanced Neon Aesthetics**: The neon theme features beautiful glowing translucent walls with bright cyan borders and enhanced ambient reflection lighting.
+- **Glowing Cyber Cyan Walls & Thick Outlines**: In the neon theme, walls glow with a cyber cyan emissive energy (`#00d4ff`), and their borders are highlighted in thicker, solid bright cyan (`#00FFFF`) using edges geometry to completely eliminate internal diagonal lines.
+- **Reflective Ground & Grid Floor**: The neon theme floor uses Drei's `<MeshReflectorMaterial>` to display real-time reflections and shadows of Pacman, ghosts, pellets, and maze walls, overlayed with a custom purple-and-cyan grid.
+- **Solid Matte Ghosts**: Ghosts are styled as solid matte colors (`roughness: 1.0`, `metalness: 0.0`) under all themes to remove shiny specular reflections while preserving their vibrant neon color glow.
+- **Non-Flickering Instanced Meshes**: Fixed standard WebGL frustum-culling constraints by configuring `frustumCulled={false}` on walls and pellets, ensuring objects never vanish or flicker when panning the camera.
 - **Dynamic Camera Modes**:
-  - *Follow Mode*: Smooth, centered 3rd-person follow camera tracking straight behind Pacman.
+  - *Follow Mode*: Smooth, centered 3rd-person follow camera tracking straight behind Pacman. Includes a cinematic swooping zoom-in transition from the sky overhead when switching from top-down mode.
   - *Top-Down Mode*: Sleek isometric overhead view automatically scaled to fit your screen aspect ratio.
 - **Classic Ghost AI Pathfinding**: Authentically replicates arcade AI behaviors (Blinky, Pinky, Inky, Clyde) across *Chase*, *Scatter*, *Frightened*, and *Respawn* modes.
 - **Waving Ghost Skirt (Feet)**: Ghosts feature animated bottom tentacles wiggling in phase-shifted sine waves, keeping their colors perfectly synchronized with their state.

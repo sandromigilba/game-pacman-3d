@@ -134,6 +134,7 @@ export const PelletsContainer: React.FC = () => {
           ref={normalRef}
           args={[null as any, null as any, normalPellets.length]}
           castShadow
+          frustumCulled={false}
         >
           <boxGeometry />
           <meshStandardMaterial
@@ -151,6 +152,7 @@ export const PelletsContainer: React.FC = () => {
           ref={powerRef}
           args={[null as any, null as any, powerPellets.length]}
           castShadow
+          frustumCulled={false}
         >
           <sphereGeometry args={[1, 16, 16]} />
           <meshStandardMaterial

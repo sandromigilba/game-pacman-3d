@@ -126,21 +126,11 @@ export const GhostCharacter: React.FC<GhostProps> = ({ type }) => {
   const bodyMaterialProps = useMemo(() => {
     const color = GHOST_COLORS[type];
     if (theme === 'minimalist') {
-      return { color, roughness: 0.9, metalness: 0.1, emissive: '#000000', emissiveIntensity: 0 };
-    } else if (theme === 'retro') {
-      return { color, roughness: 1.0, metalness: 0.0, emissive: '#000000', emissiveIntensity: 0 };
-    } else {
-      return { color, roughness: 0.1, metalness: 0.5, emissive: color, emissiveIntensity: 1.0 };
-    }
-  }, [theme, type]);
-
-  const tentaclesMaterialProps = useMemo(() => {
-    const color = GHOST_COLORS[type];
-    if (theme === 'minimalist') {
       return { color, roughness: 1.0, metalness: 0.0, emissive: '#000000', emissiveIntensity: 0 };
     } else if (theme === 'retro') {
       return { color, roughness: 1.0, metalness: 0.0, emissive: '#000000', emissiveIntensity: 0 };
     } else {
+      // Matte, solid color ghost body with glow under neon theme (no specular reflections)
       return { color, roughness: 1.0, metalness: 0.0, emissive: color, emissiveIntensity: 1.0 };
     }
   }, [theme, type]);
@@ -156,19 +146,19 @@ export const GhostCharacter: React.FC<GhostProps> = ({ type }) => {
         <group ref={tentaclesRef}>
           <mesh position={[0.13, -0.28, 0]}>
             <sphereGeometry args={[0.09, 12, 12]} />
-            <meshStandardMaterial {...tentaclesMaterialProps} />
+            <meshStandardMaterial {...bodyMaterialProps} />
           </mesh>
           <mesh position={[-0.13, -0.28, 0]}>
             <sphereGeometry args={[0.09, 12, 12]} />
-            <meshStandardMaterial {...tentaclesMaterialProps} />
+            <meshStandardMaterial {...bodyMaterialProps} />
           </mesh>
           <mesh position={[0, -0.28, 0.13]}>
             <sphereGeometry args={[0.09, 12, 12]} />
-            <meshStandardMaterial {...tentaclesMaterialProps} />
+            <meshStandardMaterial {...bodyMaterialProps} />
           </mesh>
           <mesh position={[0, -0.28, -0.13]}>
             <sphereGeometry args={[0.09, 12, 12]} />
-            <meshStandardMaterial {...tentaclesMaterialProps} />
+            <meshStandardMaterial {...bodyMaterialProps} />
           </mesh>
         </group>
       </mesh>
