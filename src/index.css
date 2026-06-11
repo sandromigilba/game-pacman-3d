@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #FFD700;
+  --color-secondary: #00D4FF;
+  --color-accent: #8B5CF6;
+  --color-bg-main: #050816;
+  --color-surface-card: rgba(17, 24, 39, 0.6);
+  --font-sans: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Glassmorphism panel base styling */
+.glass-panel {
+  background: rgba(17, 24, 39, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 30px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Glassmorphism active element styling */
+.glass-active {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: rgba(0, 212, 255, 0.3);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+}
+
+/* Custom rounded corners rule */
+.rounded-30 {
+  border-radius: 30px !important;
+}
+
+/* Hide scrollbars but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Neon Text Glows */
+.neon-text-blue {
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.8), 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.neon-text-yellow {
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.neon-text-purple {
+  text-shadow: 0 0 8px rgba(139, 92, 246, 0.8), 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+/* Neon Borders */
+.neon-border-blue {
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.2), inset 0 0 15px rgba(0, 212, 255, 0.1);
+  border-color: rgba(0, 212, 255, 0.4);
+}
+
+.neon-border-yellow {
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2), inset 0 0 15px rgba(255, 215, 0, 0.1);
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+/* Global styles */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #050816;
+  color: #ffffff;
+  overflow: hidden;
+  font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Dynamic screen shake classes */
+@keyframes shake {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  10% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+  20% { transform: translate(-3px, 0px) rotate(0.5deg); }
+  30% { transform: translate(0px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-0.5deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(2px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(2px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-0.5deg); }
+}
+
+.animate-shake {
+  animation: shake 0.4s infinite;
+}
+
+/* Floating animation for menu screens */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Pulse glow for items */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+    opacity: 0.8;
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    opacity: 1.0;
+  }
+}
+
+.pulse-glow {
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+/* Virtual Joystick active areas styling */
+.joystick-container {
+  touch-action: none;
+}
+.joystick-handle {
+  transition: transform 0.05s ease-out;
+}
+
+/* Custom Scrollbar for sidebars */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.01);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Animated Pacman Chomping Keyframes */
+@keyframes chomp-top {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-35deg); }
+}
+
+@keyframes chomp-bottom {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(35deg); }
+}
+
+.animate-chomp-top {
+  animation: chomp-top 0.22s infinite alternate ease-in-out;
+}
+
+.animate-chomp-bottom {
+  animation: chomp-bottom 0.22s infinite alternate ease-in-out;
+}
+

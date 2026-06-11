@@ -1,0 +1,18 @@
+{
+  "short_name": "Pacman3D",
+  "name": "PACMAN 3D // Cyber Arcade",
+  "description": "Retro-neon 3D Pacman arcade web game built with React 19, Three.js, and R3F.",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#050816",
+  "theme_color": "#FFD700",
+  "display": "standalone",
+  "orientation": "landscape-primary"
+}
