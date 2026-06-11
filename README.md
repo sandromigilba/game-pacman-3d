@@ -11,10 +11,10 @@ The aesthetics combine **cyberpunk neon grids** (reminiscent of Pac-Man Champion
 ### 🔗 Play the Game: [game-pacman-3d.vercel.app](https://game-pacman-3d.vercel.app)
 
 #### Pacman 3D Menu Page 
-![Pacman 3D Menu Page](public/image1.png)<br>
+![Gambar Pacman 3D Menu Page](public/image1.png)<br>
 
 #### Pacman 3D Game Page
-![](public/image2.png)
+![Gambar Pacman 3D Game Page](public/image2.png)
 
 ---
 
@@ -22,14 +22,10 @@ The aesthetics combine **cyberpunk neon grids** (reminiscent of Pac-Man Champion
 
 - **Stylized 3D Maze World**: Built with `<instancedMesh>` for 60 FPS performance, featuring neon-glowing emissive trims, dynamic fog, and soft shadow casting.
 - **Glowing Cyber Cyan Walls & Thick Outlines**: In the neon theme, walls glow with a cyber cyan emissive energy (`#00d4ff`), and their borders are highlighted in thicker, solid bright cyan (`#00FFFF`) using edges geometry to completely eliminate internal diagonal lines.
-- **Reflective Ground & Grid Floor**: The neon theme floor uses Drei's `<MeshReflectorMaterial>` to display real-time reflections and shadows of Pacman, ghosts, pellets, and maze walls, overlayed with a custom purple-and-cyan grid.
-- **Solid Matte Ghosts**: Ghosts are styled as solid matte colors (`roughness: 1.0`, `metalness: 0.0`) under all themes to remove shiny specular reflections while preserving their vibrant neon color glow.
-- **Non-Flickering Instanced Meshes**: Fixed standard WebGL frustum-culling constraints by configuring `frustumCulled={false}` on walls and pellets, ensuring objects never vanish or flicker when panning the camera.
 - **Dynamic Camera Modes**:
   - *Follow Mode*: Smooth, centered 3rd-person follow camera tracking straight behind Pacman. Includes a cinematic swooping zoom-in transition from the sky overhead when switching from top-down mode.
   - *Top-Down Mode*: Sleek isometric overhead view automatically scaled to fit your screen aspect ratio.
 - **Classic Ghost AI Pathfinding**: Authentically replicates arcade AI behaviors (Blinky, Pinky, Inky, Clyde) across *Chase*, *Scatter*, *Frightened*, and *Respawn* modes.
-- **Waving Ghost Skirt (Feet)**: Ghosts feature animated bottom tentacles wiggling in phase-shifted sine waves, keeping their colors perfectly synchronized with their state.
 - **Procedural Web Audio Synthesizer**: Generates chiptunes (start melodies, munching wakas, death drops, victory fanfares) procedurally in the browser, eliminating external audio assets or load failures.
 - **Animated 3D Pacman**: Features a buttery-smooth waka-waka mouth chewing animation with slowed majestical cycles (speed `11`) and smooth lerp transitions when starting and stopping.
 - **UI-Only Zen mode (Fullscreen)**: Toggles top HUD header and sidebar panels to expand the canvas to full screen inside the browser window using React state.
