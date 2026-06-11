@@ -6,15 +6,26 @@ The aesthetics combine **cyberpunk neon grids** (reminiscent of Pac-Man Champion
 
 ---
 
+## 🎮 Live Preview & Deployment
+
+### 🔗 Play the Game: [game-pacman-3d.vercel.app](https://game-pacman-3d.vercel.app)
+
+![Pacman 3D Gameplay Preview](public/gameplay_preview.png)
+
+---
+
 ## 🚀 Key Features
 
 - **Stylized 3D Maze World**: Built with `<instancedMesh>` for 60 FPS performance, featuring neon-glowing emissive trims, dynamic fog, and soft shadow casting.
+- **Enhanced Neon Aesthetics**: The neon theme features beautiful glowing translucent walls with bright cyan borders and enhanced ambient reflection lighting.
 - **Dynamic Camera Modes**:
-  - *Follow Mode*: Smooth, lerped 3rd-person follow camera tracking behind Pacman.
-  - *Top-Down Mode*: Sleek isometric overhead view.
+  - *Follow Mode*: Smooth, centered 3rd-person follow camera tracking straight behind Pacman.
+  - *Top-Down Mode*: Sleek isometric overhead view automatically scaled to fit your screen aspect ratio.
 - **Classic Ghost AI Pathfinding**: Authentically replicates arcade AI behaviors (Blinky, Pinky, Inky, Clyde) across *Chase*, *Scatter*, *Frightened*, and *Respawn* modes.
+- **Waving Ghost Skirt (Feet)**: Ghosts feature animated bottom tentacles wiggling in phase-shifted sine waves, keeping their colors perfectly synchronized with their state.
 - **Procedural Web Audio Synthesizer**: Generates chiptunes (start melodies, munching wakas, death drops, victory fanfares) procedurally in the browser, eliminating external audio assets or load failures.
-- **Animated 3D Pacman & Ghosts**: Pacman features an animated chewing mouth that rotates towards heading directions. Ghosts feature floating bob animations, pupillary direction gaze tracking, and flash indicators.
+- **Animated 3D Pacman**: Features a buttery-smooth waka-waka mouth chewing animation with slowed majestical cycles (speed `11`) and smooth lerp transitions when starting and stopping.
+- **UI-Only Zen mode (Fullscreen)**: Toggles top HUD header and sidebar panels to expand the canvas to full screen inside the browser window using React state.
 - **Premium Glassmorphic UI**: 30px rounded corners, backdrop-blur HUDs, statistics dashboard, daily challenges, and unlocked achievements tracking.
 - **Mobile First**: Built-in touch controllers featuring an on-screen swipe/drag virtual joystick.
 - **SEO & PWA optimized**: Implements `react-helmet-async` header injection, schema.org VideoGame structured data, manifest settings, and Vercel caching rules.
