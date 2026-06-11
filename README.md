@@ -6,11 +6,12 @@ The aesthetics combine **cyberpunk neon grids** (reminiscent of Pac-Man Champion
 
 ---
 
-## 🎮 Live Preview & Deployment
+## 🎮 Preview
 
 ### 🔗 Play the Game: [game-pacman-3d.vercel.app](https://game-pacman-3d.vercel.app)
 
-![Pacman 3D Gameplay Preview](public/gameplay_preview.png)
+![Pacman 3D Menu Page](public/image1.png)
+![Pacman 3D Game Page](public/image2.png)
 
 ---
 
